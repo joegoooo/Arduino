@@ -1,15 +1,72 @@
+int in1 = 4;
+int in2 = 5;
+int in3 = 6;
+int in4 = 7;
+/*        left             right
+       in1    in2      in3      in4
+front  high   low      high     low
+back   low    high     low      high
+stop   low    low      low      low
+left   low    low      high     low
+right  high   low      low      low
+*/
+
+
+
+
 void setup() {
   // put your setup code here, to run once:
-  pinMode(3, OUTPUT);
-  Serial.begin(9600);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  for(int i=40; i<180; i+=10){
-    analogWrite(3, i);
-    Serial.print(i);
-    delay(1000);
-    
-  }
+  front();
+  delay(1000);
+  back();
+  delay(1000);
+  stop1();
+  delay(1000);
+  left();
+  delay(1000);
+  right();
+  delay(1000);
+}
+
+void front(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+}
+
+void back(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+}
+
+void stop1(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}
+
+void left(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+}
+
+void right(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
 }
