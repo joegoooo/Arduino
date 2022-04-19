@@ -1,0 +1,36 @@
+#include <SoftwareSerial.h>
+
+SoftwareSerial bt05(10, 11);//設定(RX, TX)接腳
+int led = 2;                //RX: 接收資料  TX: 傳輸資料
+char ledstatus;
+bool pointer = true;
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  bt05.begin(9600);//設定藍芽模組傳輸速率
+  pinMode(led, OUTPUT);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if(bt05.available()){
+    ledstatus = bt05.read();
+    Serial.println("OK");
+    Serial.println(ledstatus);
+  }
+  if(ledstatus == 'A'){
+    digitalWrite(led, HIGH);
+    if(pointer == true){
+      bt05.print("LED turns on.");
+    }
+    pointer = false;
+  }
+  if(ledstatus == 'B'){
+    digitalWrite(led, LOW);
+    if(pointer == false){
+      bt05.print("LED turns off.");
+    }
+    pointer = true;
+  }
+
+}
