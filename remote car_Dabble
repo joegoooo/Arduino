@@ -1,0 +1,98 @@
+#define CUSTOM_SETTINGS
+#define INCLUDE_GAMEPAD_MODULE
+#include <Dabble.h>
+
+//設定腳位
+const int in1 = 9;
+const int in2 = 8;
+const int in3 = 7;
+const int in4 = 6;
+const int left_pwm = 10;
+const int right_pwm = 5;
+
+//設定馬達轉速(因為我的右馬達轉得比較快，所以我把右馬達的轉速調低一些)
+byte motorspeed_left = 130;
+byte motorspeed_right = 120;
+
+//控制方向函式
+void front();
+void back();
+void left();
+void right();
+void stop1();
+
+void setup() {
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  Serial.begin(9600);
+  Dabble.begin(9600);
+}
+
+void loop() {
+    //更新接收的數據
+    Dabble.processInput(); 
+    if(GamePad.isUpPressed()){
+      front();
+    }
+    else if(GamePad.isDownPressed()){
+      back();
+    }
+    else if(GamePad.isLeftPressed()){
+      left();
+    }
+    else if(GamePad.isRightPressed()){
+      right();
+    }
+    else if(GamePad.isSquarePressed()){
+      stop1();
+    }
+
+}
+
+
+void front(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void back(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void right(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, 0);
+}
+
+void left(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void stop1(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, 0);
+}
