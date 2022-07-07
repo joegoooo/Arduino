@@ -4,10 +4,10 @@ int in3 = 6;
 int in4 = 7;
 /*        left             right
        in1    in2      in3      in4
-front  high   low      high     low
-back   low    high     low      high
+front  high   low      low      high
+back   low    high     high     low
 stop   low    low      low      low
-left   low    low      high     low
+left   low    low      low      high
 right  high   low      low      low
 */
 
@@ -15,7 +15,6 @@ right  high   low      low      low
 
 
 void setup() {
-  // put your setup code here, to run once:
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
   pinMode(in3, OUTPUT);
@@ -23,7 +22,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+ //讓車子自己依照程式碼移動
   front();
   delay(1000);
   back();
@@ -39,15 +38,15 @@ void loop() {
 void front(){
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
 }
 
 void back(){
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
-  digitalWrite(in3, LOW);
-  digitalWrite(in4, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
 }
 
 void stop1(){
@@ -60,8 +59,8 @@ void stop1(){
 void left(){
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
 }
 
 void right(){
