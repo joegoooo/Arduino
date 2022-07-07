@@ -24,7 +24,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   if(bt.available()){
     char i = bt.read();
     if(i == 'A'){
@@ -50,31 +49,31 @@ void loop() {
 void front(){
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
-  digitalWrite(in3, HIGH);
-  digitalWrite(in4, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
   delay(100);
 }
 
 void back(){
   digitalWrite(in1, LOW);
   digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  delay(100);
+}
+
+void left(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
   delay(100);
 }
 
-void left(){
+void right(){
   digitalWrite(in1, HIGH);
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
-  digitalWrite(in4, LOW);
-  delay(100);
-}
-
-void right(){
-  digitalWrite(in1, LOW);
-  digitalWrite(in2, LOW);
-  digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
   delay(100);
 }
