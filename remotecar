@@ -5,6 +5,12 @@ const int in2 = 8;
 const int in3 = 7;
 const int in4 = 6;
 SoftwareSerial bt(2, 3);//(RX, TX)
+const int left_pwm = 10;
+const int right_pwm = 5;
+
+//設定馬達轉速(因為我的右馬達轉得比較快，所以我把右馬達的轉速調低一些)
+byte motorspeed_left = 130;
+byte motorspeed_right = 120;
 
 void front();//往前走
 void back();//往後走
@@ -28,15 +34,19 @@ void loop() {
     char i = bt.read();
     if(i == 'A'){
       front();
+      delay(200);
     }
     else if(i == 'B'){
       right();
+      delay(200);
     }
     else if(i == 'C'){
       back();
+      delay(200);
     }
     else if(i == 'D'){
       left();
+      delay(200);
     }
     else{
       stop1();
@@ -51,7 +61,8 @@ void front(){
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  delay(100);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, motorspeed_right);
 }
 
 void back(){
@@ -59,7 +70,8 @@ void back(){
   digitalWrite(in2, HIGH);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
-  delay(100);
+  analogWrite(left_pwm, -motorspeed_left);
+  analogWrite(right_pwm, -motorspeed_right);
 }
 
 void left(){
@@ -67,7 +79,8 @@ void left(){
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, HIGH);
-  delay(100);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, motorspeed_right);
 }
 
 void right(){
@@ -75,7 +88,8 @@ void right(){
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
-  delay(100);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, 0);
 }
 
 void stop1(){
@@ -83,5 +97,6 @@ void stop1(){
   digitalWrite(in2, LOW);
   digitalWrite(in3, LOW);
   digitalWrite(in4, LOW);
-  delay(100);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, 0);
 }
