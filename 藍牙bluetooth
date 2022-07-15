@@ -12,7 +12,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  //若收到A，開燈；若收到B，關燈
   if(bt05.available()){
     ledstatus = bt05.read();
     Serial.println("OK");
