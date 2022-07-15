@@ -1,0 +1,91 @@
+#include <SoftwareSerial.h>
+#include <Ultrasonic.h>
+
+const int in1 = 9;
+const int in2 = 8;
+const int in3 = 7;
+const int in4 = 6;
+const int left_pwm = 10;
+const int right_pwm = 5;
+byte motorspeed_left = 130;
+byte motorspeed_right = 125;
+char i;
+
+Ultrasonic ultrasonic(13, 4);
+int distance;
+void front();
+void back();
+void left();
+void right();
+void stop1();
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  distance = ultrasonic.read();
+  front();
+  Serial.println(distance);
+  //若與前方距離小於10，就停止前進，後退，右轉，再前進
+  if(distance <= 10){
+    stop1();
+    delay(100);
+    back();
+    delay(300);
+    right();
+    delay(500);
+  }
+}
+
+
+void front(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void back(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void right(){
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, motorspeed_left);
+  analogWrite(right_pwm, 0);
+}
+
+void left(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, motorspeed_right);
+}
+
+void stop1(){
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+  analogWrite(left_pwm, 0);
+  analogWrite(right_pwm, 0);
+}
