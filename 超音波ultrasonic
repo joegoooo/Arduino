@@ -10,7 +10,7 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  //偵測和前方的距離並印出來
   distant = ultrasonic.read();
   Serial.print("Distant is:");
   Serial.println(distant);
